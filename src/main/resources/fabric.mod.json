@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "template",
+  "version": "${version}",
+  "name": "Template Mod",
+  "description": "Mod Description",
+  "authors": [
+    "Syorito Hatsuki"
+  ],
+  "contact": {
+    "homepage": "https://syorito-hatsuki.dev/"
+  },
+  "license": "MIT Licence",
+  "icon": "assets/template/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "dev.syoritohatsuki.template.TemplateMod"
+      }
+    ]
+  },
+  "mixins": [
+    "template.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loaderVersion}",
+    "fabric": "*",
+    "fabric-language-kotlin": ">=${fabricKotlinVersion}",
+    "minecraft": "${minecraftVersion}",
+    "java": ">=${javaVersion}"
+  }
+}
