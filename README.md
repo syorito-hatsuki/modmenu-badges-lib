@@ -1,9 +1,11 @@
-# Modmenu Badges Lib
+# ModMenu Badges Lib
 
-## Descrrecommendiption
+## Description
+
 Just simple library for add own badges to ModMenu
 
 ## Adding the dependency
+
 ```gradle
 repositories {
     maven("https://api.modrinth.com/maven")
@@ -22,11 +24,13 @@ dependencies {
 // Also add dependency recommend in your fabric.mod.json
 "recommends": {
   "modmenu-badges-lib": "*"
-},
+}
 ```
 
 ## Usage
+
 Add next lines in our `fabric.mod.json`. For color calculating I can recommmend this site https://argb-int-calculator.netlify.app
+
 ```json5
 {
   ...
@@ -37,9 +41,12 @@ Add next lines in our `fabric.mod.json`. For color calculating I can recommmend 
     },
     "mcb": [
       {
-        "name": "Example Badge",     // Badge text
-        "fillColor": -2003942227,    // Fill color
-        "outlineColor": -2003084874  // Outline color
+        // Badge text
+        "name": "Example Badge",
+        // Fill color
+        "fillColor": -2003942227,
+        // Outline color
+        "outlineColor": -2003084874
       },
       {
         ...
