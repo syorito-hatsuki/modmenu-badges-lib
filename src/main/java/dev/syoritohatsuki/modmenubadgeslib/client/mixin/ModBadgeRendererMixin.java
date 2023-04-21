@@ -4,8 +4,8 @@ import com.terraformersmc.modmenu.util.mod.Mod;
 import com.terraformersmc.modmenu.util.mod.ModBadgeRenderer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.OrderedText;
-import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,7 +30,7 @@ public abstract class ModBadgeRendererMixin {
                         var name = obj.get("name").getAsString();
                         var outline = obj.get("outlineColor").getAsNumber().intValue();
                         var fill = obj.get("fillColor").getAsNumber().intValue();
-                        drawBadge(matrices, Text.literal(name).asOrderedText(), outline, fill, mouseX, mouseY);
+                        drawBadge(matrices, new LiteralText(name).asOrderedText(), outline, fill, mouseX, mouseY);
                     });
         } catch (Exception ignored) {
         }
