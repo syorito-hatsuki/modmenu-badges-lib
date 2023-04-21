@@ -4,6 +4,9 @@
 
 Just simple library for add own badges to ModMenu
 
+![image](https://user-images.githubusercontent.com/33298273/233725872-902aa00e-618d-48d3-b594-990d2cad85ae.png)
+
+
 ## Adding the dependency
 
 ```gradle
