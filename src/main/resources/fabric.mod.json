@@ -1,9 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "template",
+  "id": "modmenu-badges-lib",
   "version": "${version}",
-  "name": "Template Mod",
-  "description": "Mod Description",
+  "name": "ModMenu Badges Lib",
   "authors": [
     "Syorito Hatsuki"
   ],
@@ -11,24 +10,28 @@
     "homepage": "https://syorito-hatsuki.dev/"
   },
   "license": "MIT Licence",
-  "icon": "assets/template/icon.png",
-  "environment": "*",
-  "entrypoints": {
-    "main": [
+  "environment": "client",
+  "mixins": [
+    "modmenubadgeslib.mixins.json"
+  ],
+  "custom": {
+    "modmenu": {
+      "badges": [ "library" ]
+    },
+    "mcb": [
       {
-        "adapter": "kotlin",
-        "value": "dev.syoritohatsuki.template.TemplateMod"
+        "name": "Example Badge",
+        "fillColor": -2003942227,
+        "outlineColor": -2003084874
       }
     ]
   },
-  "mixins": [
-    "template.mixins.json"
-  ],
   "depends": {
     "fabricloader": ">=${loaderVersion}",
-    "fabric": "*",
-    "fabric-language-kotlin": ">=${fabricKotlinVersion}",
-    "minecraft": "${minecraftVersion}",
+    "minecraft": ">=1.19",
     "java": ">=${javaVersion}"
+  },
+  "recommends": {
+    "modmenu": "*"
   }
 }

@@ -12,13 +12,12 @@ base {
     archivesName.set(archivesBaseName)
 }
 
-val fabricKotlinVersion: String by project
 val javaVersion = JavaVersion.VERSION_17
 val loaderVersion: String by project
 val minecraftVersion: String by project
 
 val modVersion: String by project
-version = "${DateTimeFormatter.ofPattern("yyyy.MM").format(LocalDateTime.now())}.$modVersion"
+version = "${DateTimeFormatter.ofPattern("yyyy.M").format(LocalDateTime.now())}.$modVersion"
 
 val mavenGroup: String by project
 group = mavenGroup
@@ -36,10 +35,7 @@ dependencies {
 
     modImplementation("net.fabricmc", "fabric-loader", loaderVersion)
 
-    val fabricVersion: String by project
-    modImplementation("net.fabricmc.fabric-api", "fabric-api", fabricVersion)
-
-    modImplementation("net.fabricmc", "fabric-language-kotlin", fabricKotlinVersion)
+    modImplementation("maven.modrinth", "modmenu", "yjjsLqbS")
 }
 
 tasks {
@@ -57,11 +53,7 @@ tasks {
     }
 
     jar {
-        from("LICENSE") {
-            rename {
-                "${it}_${base.archivesName}"
-            }
-        }
+        from("LICENSE")
     }
 
     processResources {
@@ -72,7 +64,6 @@ tasks {
                     "version" to project.version,
                     "loaderVersion" to loaderVersion,
                     "minecraftVersion" to minecraftVersion,
-                    "fabricKotlinVersion" to fabricKotlinVersion,
                     "javaVersion" to javaVersion.toString()
                 )
             )
