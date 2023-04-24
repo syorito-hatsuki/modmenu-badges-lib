@@ -16,7 +16,7 @@ repositories {
 
 dependencies {
     // Option 1: Include ModMenu Badges Lib to project for it available within your own jar (additional ~5kb)
-    include(modImplementation("maven.modrinth", "modmenu-badges-libb", "<version>"))
+    include(modImplementation("maven.modrinth", "modmenu-badges-lib", "<version>"))
     
     // Option 2: Depend on ModMenu Badges Lib, but require that users install it manually
     modImplementation("maven.modrinth", "modmenu-badges-lib", "<version>")
