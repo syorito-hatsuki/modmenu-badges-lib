@@ -20,15 +20,15 @@
     },
     "mcb": [
       {
-        "name": "Example Badge",
-        "fillColor": -2003942227,
-        "outlineColor": -2003084874
+        "name": "Ducky House",
+        "fillColor": -13730510,
+        "outlineColor": -11751600
       }
     ]
   },
   "depends": {
     "fabricloader": ">=${loaderVersion}",
-    "minecraft": ">=1.19",
+    "minecraft": ">=1.20",
     "java": ">=${javaVersion}"
   },
   "recommends": {

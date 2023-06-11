@@ -35,7 +35,7 @@ dependencies {
 
     modImplementation("net.fabricmc", "fabric-loader", loaderVersion)
 
-    modImplementation("maven.modrinth", "modmenu", "yjjsLqbS")
+    modImplementation("maven.modrinth", "modmenu", "RTFDnTKf")
 }
 
 tasks {
