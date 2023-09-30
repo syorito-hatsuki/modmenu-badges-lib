@@ -1,0 +1,17 @@
+:root {
+    --borderPadding: 8px;
+}
+
+body {
+    background: url("assets/background.png");
+    background-size: 128px;
+    image-rendering: pixelated;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--borderPadding);
+    height: calc(100dvh - var(--borderPadding) * 2);
+}
