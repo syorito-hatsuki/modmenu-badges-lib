@@ -1,0 +1,42 @@
+.labelInput {
+    background-color: #000000;
+    border-width: 2px;
+    border-style: solid;
+    outline-style: none;
+    font-family: Minecraftia, serif;
+    font-size: 16px;
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.colorPickerContainer {
+    display: flex;
+    padding-bottom: 8px;
+    align-items: baseline;
+}
+
+.colorPickerLabelStyle {
+    color: #ffffff;
+    font-family: Minecraftia, serif;
+    white-space: pre;
+}
+
+.colorPickerInputStyle {
+    border-style: solid;
+    border-color: black;
+    outline-style: solid;
+    outline-color: white;
+    height: 20px;
+    width: 40px;
+}
+
+.colorPicker {
+    position: absolute;
+    top: -100%;
+    left: 100%;
+    padding: 5px;
+    z-index: 9999;
+    margin-left: 8px;
+}

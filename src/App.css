@@ -16,3 +16,13 @@ body {
     padding: var(--borderPadding);
     height: calc(100dvh - var(--borderPadding) * 2);
 }
+
+.preview {
+    padding: 16px;
+    margin-bottom: 16px;
+    outline-width: 16px;
+    outline-style: solid;
+    border: none;
+    font-size: 56px;
+    font-family: Minecraftia, serif;
+}
