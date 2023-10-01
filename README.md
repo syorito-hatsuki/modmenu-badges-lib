@@ -70,7 +70,8 @@ dependencies {
 }
 ```
 
-3. Add the next lines in our `fabric.mod.json`. For color calculating I can recommend this site https://argb-int-calculator.netlify.app
+3. Open [ModMenu Badges Generator](https://syorito-hatsuki.github.io/modmenu-badges-lib/) add copy result to our `fabric.mod.json`. 
+> Alternative color code generator: https://argb-int-calculator.netlify.app
 
 ```json5
 {
@@ -97,7 +98,7 @@ dependencies {
 ## Roadmap
 
 - [ ] Search by badge
-- [ ] Own online badge editor with real-time preview
+- [x] Own online badge editor with real-time preview
 
 See the [open issues](https://github.com/syorito-hatsuki/modmenu-badges-lib/issues) for a full list of proposed
 features (and known issues).
