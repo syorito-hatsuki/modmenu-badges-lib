@@ -26,11 +26,9 @@ export default function ColorPicker(props: ColorPickerProps) {
                 <button className="colorPickerInputStyle" style={{background: props.color}}
                         value={props.color} onClick={() => setOpen(true)}/>
                 {isOpen && <div ref={containerRef}>
-                    <HexAlphaColorPicker onChange={newColor => {
-                        const color = newColor.length === 7 ? newColor + "ff" : newColor;
-                        props.setColor(color);
-                    }} style={{position: "absolute"}} className="colorPicker" color={props.color}
-                    />
+                    <HexAlphaColorPicker onChange={newColor => props.setColor(newColor)}
+                                         style={{position: "absolute"}}
+                                         className="colorPicker" color={props.color}/>
                 </div>}
             </div>
         </div>
