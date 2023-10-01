@@ -37,6 +37,7 @@ export default function App() {
                             "mcb": [
                                 {
                                     "name": label,
+                                    "labelColor": toRGBA(labelColor.replace(/^#/, '')),
                                     "fillColor": toRGBA(backgroundColor.replace(/^#/, '')),
                                     "outlineColor": toRGBA(outlineColor.replace(/^#/, '')),
                                 }
