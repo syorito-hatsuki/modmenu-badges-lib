@@ -42,7 +42,8 @@
 
 .tabButton {
     flex-grow: 1;
-    background: url("src/assets/stone.png");
+    text-shadow: 2px 2px black;
+    background: url("./../assets/stone.png");
     border-style: solid;
     border-width: 2px;
     background-size: 48px;

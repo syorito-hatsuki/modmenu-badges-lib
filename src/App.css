@@ -3,7 +3,7 @@
 }
 
 body {
-    background: url("assets/background.png");
+    background: url("./assets/background.png");
     background-size: 128px;
     image-rendering: pixelated;
 }
