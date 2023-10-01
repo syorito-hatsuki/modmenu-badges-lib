@@ -39,3 +39,16 @@
     z-index: 9999;
     margin-left: 8px;
 }
+
+.tabButton {
+    flex-grow: 1;
+    background: url("src/assets/stone.png");
+    border-style: solid;
+    border-width: 2px;
+    background-size: 48px;
+    height: 48px;
+    width: max-content;
+    image-rendering: pixelated;
+    font-family: Minecraftia, serif;
+    color: white;
+}
