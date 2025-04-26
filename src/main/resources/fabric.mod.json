@@ -16,7 +16,12 @@
   ],
   "custom": {
     "modmenu": {
-      "badges": [ "library" ]
+      "badges": [
+        "library"
+      ],
+      "links": {
+        "modmenu.discord": "https://discord.gg/pbwnMwnUD6"
+      }
     },
     "mcb": [
       {
@@ -27,9 +32,9 @@
     ]
   },
   "depends": {
-    "fabricloader": ">=${loaderVersion}",
-    "minecraft": ">=1.20",
-    "java": ">=${javaVersion}"
+    "fabricloader": "*",
+    "minecraft": ">=1.21.5",
+    "java": "*"
   },
   "recommends": {
     "modmenu": "*"
