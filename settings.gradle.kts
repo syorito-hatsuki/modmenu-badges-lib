@@ -8,5 +8,7 @@ pluginManagement {
     plugins {
         val loomVersion: String by settings
         id("fabric-loom") version loomVersion
+
+        id("com.modrinth.minotaur") version "2.+"
     }
 }

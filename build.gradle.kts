@@ -1,8 +1,8 @@
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import com.modrinth.minotaur.TaskModrinthUpload
 
 plugins {
     id("fabric-loom")
+    id("com.modrinth.minotaur")
 }
 
 base {
@@ -13,7 +13,7 @@ base {
 val javaVersion = JavaVersion.VERSION_21
 
 val modVersion: String by project
-version = "${DateTimeFormatter.ofPattern("yyyy.M").format(LocalDateTime.now())}.$modVersion"
+version = modVersion
 
 val mavenGroup: String by project
 group = mavenGroup
@@ -36,7 +36,35 @@ dependencies {
     modImplementation("maven.modrinth", "modmenu", modmenuVersion)
 }
 
+modrinth {
+    token.set(System.getenv("MODRINTH_TOKEN"))
+    projectId.set("modmenu-badges-lib")
+    versionName.set("ModMenu Badges Lib $modVersion")
+    versionNumber.set(modVersion)
+    versionType.set("release")
+    uploadFile.set(tasks.remapJar)
+    additionalFiles.add(tasks.remapSourcesJar)
+    gameVersions.addAll("1.21.6")
+    loaders.add("fabric")
+    changelog.set(rootProject.file("CHANGELOG.md").readText())
+    dependencies {
+        required.project("modmenu")
+    }
+}
+
 tasks {
+
+    named("modrinth").configure {
+        @Suppress("UnstableApiUsage") doLast {
+            (this@configure as TaskModrinthUpload).uploadInfo?.let {
+                "https://modrinth.com/mod/modmenu-badges-lib/version/${it.id}".apply {
+                    println(this)
+                    rootProject.file("build/modrinth_url.txt").writeText(this)
+                }
+            } ?: return@doLast
+        }
+    }
+
     java {
         toolchain {
             languageVersion.set(JavaLanguageVersion.of(javaVersion.toString()))
@@ -46,12 +74,7 @@ tasks {
         withSourcesJar()
     }
 
-    jar {
-        from("LICENSE")
-    }
-
     processResources {
-        inputs.property("version", project.version)
         filesMatching("fabric.mod.json") {
             expand(mutableMapOf("version" to project.version))
         }
