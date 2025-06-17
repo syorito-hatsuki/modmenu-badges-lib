@@ -19,7 +19,7 @@ public abstract class ModBadgeRendererMixin {
     protected Mod mod;
 
     @Shadow
-    public abstract void drawBadge(DrawContext DrawContext, OrderedText text, int outlineColor, int fillColor);
+    public abstract void drawBadge(DrawContext DrawContext, OrderedText text, int outlineColor, int fillColor, int mouseX, int mouseY);
 
     @Inject(method = "draw", at = @At("TAIL"))
     public void drawCustomBadges(DrawContext DrawContext, int mouseX, int mouseY, CallbackInfo ci) {
@@ -30,7 +30,7 @@ public abstract class ModBadgeRendererMixin {
                         var name = obj.get("name").getAsString();
                         var outline = obj.get("outlineColor").getAsNumber().intValue();
                         var fill = obj.get("fillColor").getAsNumber().intValue();
-                        drawBadge(DrawContext, Text.literal(name).asOrderedText(), outline, fill);
+                        drawBadge(DrawContext, Text.literal(name).asOrderedText(), outline, fill, mouseX, mouseY);
                     });
         } catch (Exception ignored) {
         }
