@@ -14,6 +14,9 @@
 
 <br />
 <div align="center">
+  <a href="https://github.com/syorito-hatsuki/death-counter">
+    <img src="https://github.com/syorito-hatsuki/modmenu-badges-lib/blob/1.20.6/src/main/resources/assets/modmenu-badges-lib/icon.png?raw=true" alt="Logo" width="80" height="80">
+  </a>
 <h3 align="center">ModMenu Badges Lib</h3>
   <p align="center">
       More badge!!!

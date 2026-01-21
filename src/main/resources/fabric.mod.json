@@ -10,6 +10,7 @@
     "homepage": "https://syorito-hatsuki.dev/"
   },
   "license": "MIT Licence",
+  "icon": "assets/modmenu-badges-lib/icon.png",
   "environment": "client",
   "mixins": [
     "modmenubadgeslib.mixins.json"
