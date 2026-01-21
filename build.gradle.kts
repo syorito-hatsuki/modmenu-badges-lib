@@ -32,6 +32,9 @@ dependencies {
     val loaderVersion: String by project
     modImplementation("net.fabricmc", "fabric-loader", loaderVersion)
 
+    val fabricVersion: String by project
+    modImplementation("net.fabricmc.fabric-api", "fabric-api", fabricVersion)
+
     val modmenuVersion: String by project
     modImplementation("maven.modrinth", "modmenu", modmenuVersion)
 }

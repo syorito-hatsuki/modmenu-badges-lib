@@ -12,6 +12,11 @@
   "license": "MIT Licence",
   "icon": "assets/modmenu-badges-lib/icon.png",
   "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.syoritohatsuki.modmenubadgeslib.client.ModMenuBadgesLibClient"
+    ]
+  },
   "mixins": [
     "modmenubadgeslib.mixins.json"
   ],
@@ -34,6 +39,7 @@
   },
   "depends": {
     "fabricloader": "*",
+    "fabric-api": "*",
     "minecraft": ">=1.21.6",
     "java": "*"
   },

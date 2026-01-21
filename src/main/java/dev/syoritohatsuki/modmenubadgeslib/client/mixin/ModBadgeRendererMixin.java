@@ -2,7 +2,7 @@ package dev.syoritohatsuki.modmenubadgeslib.client.mixin;
 
 import com.terraformersmc.modmenu.util.mod.Mod;
 import com.terraformersmc.modmenu.util.mod.ModBadgeRenderer;
-import net.fabricmc.loader.api.FabricLoader;
+import dev.syoritohatsuki.modmenubadgeslib.client.ExtraBadges;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
@@ -23,16 +23,8 @@ public abstract class ModBadgeRendererMixin {
 
     @Inject(method = "draw", at = @At("TAIL"))
     public void drawCustomBadges(DrawContext DrawContext, int mouseX, int mouseY, CallbackInfo ci) {
-        try {
-            FabricLoader.getInstance().getModContainer(mod.getId()).orElse(null)
-                    .getMetadata().getCustomValue("mcb").getAsArray().forEach(customValue -> {
-                        var obj = customValue.getAsObject();
-                        var name = obj.get("name").getAsString();
-                        var outline = obj.get("outlineColor").getAsNumber().intValue();
-                        var fill = obj.get("fillColor").getAsNumber().intValue();
-                        drawBadge(DrawContext, Text.literal(name).asOrderedText(), outline, fill, mouseX, mouseY);
-                    });
-        } catch (Exception ignored) {
-        }
+        ExtraBadges.getInstance().getExtraBadges(mod.getId()).forEach(extraBadge -> {
+            drawBadge(DrawContext, Text.literal(extraBadge.name()).asOrderedText(), extraBadge.outlineColor(), extraBadge.fillColor(), mouseX, mouseY);
+        });
     }
 }
