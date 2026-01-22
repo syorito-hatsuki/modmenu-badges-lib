@@ -76,12 +76,17 @@ public final class ExtraBadges {
             Map<String, ExternalBadges> parsed = mapper.readValue(extrasFile.toFile(), new TypeReference<>() {
             });
             parsed.forEach((key, value) -> {
-                ModMenuBadgesLibClient.LOGGER.info("\t- {}", key);
-                value.badges().forEach(badge -> ModMenuBadgesLibClient.LOGGER.info("\t\t- {}\t|\tDelete: {}", badge.name(), "(" + badge.delete() + ")"));
+                ModMenuBadgesLibClient.LOGGER.info("- {}", key);
+                value.badges().forEach(badge -> {
+                    var name = badge.name();
+                    if (badge.delete()) name = "\u001B[9m" + badge.name() + "\u001B[0m";
+                    ModMenuBadgesLibClient.LOGGER.info("\t- {}", name);
+                });
             });
             EXTERNAL.putAll(parsed);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load modmenu-extra-badges.json");
+            ModMenuBadgesLibClient.LOGGER.error("Failed to load modmenu-extra-badges.json");
+            ModMenuBadgesLibClient.LOGGER.error(e.getLocalizedMessage());
         }
     }
 
