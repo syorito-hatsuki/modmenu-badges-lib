@@ -1,14 +1,15 @@
 package dev.syoritohatsuki.modmenubadgeslib.client;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
 import com.terraformersmc.modmenu.util.mod.Mod;
 import dev.syoritohatsuki.modmenubadgeslib.client.dto.ExternalBadges;
 import dev.syoritohatsuki.modmenubadgeslib.client.dto.ExtraBadge;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.CustomValue;
+import net.minecraft.util.JsonHelper;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -20,6 +21,7 @@ public final class ExtraBadges {
     private static final Map<String, Set<ExtraBadge>> INTERNAL = new HashMap<>();
     private static final Map<String, ExternalBadges> EXTERNAL = new HashMap<>();
     private static final Path MINECRAFT_ROOT = FabricLoader.getInstance().getGameDir();
+    private static final Codec<Map<String, ExternalBadges>> ROOT_CODEC = Codec.unboundedMap(Codec.STRING, ExternalBadges.CODEC);
 
     private ExtraBadges() {
     }
@@ -70,21 +72,30 @@ public final class ExtraBadges {
         Path extrasFile = MINECRAFT_ROOT.resolve("modmenu-extra-badges.json");
         if (!Files.exists(extrasFile)) return;
 
-        ModMenuBadgesLibClient.LOGGER.info("Detected external badges file");
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            Map<String, ExternalBadges> parsed = mapper.readValue(extrasFile.toFile(), new TypeReference<>() {
+            var json = JsonHelper.deserialize(Files.readString(extrasFile));
+
+            DataResult<Map<String, ExternalBadges>> result =
+                    ROOT_CODEC.parse(JsonOps.INSTANCE, json);
+
+            Map<String, ExternalBadges> parsed = result.getOrThrow(error -> {
+                ModMenuBadgesLibClient.LOGGER.error("JSON error: {}", error);
+                return null;
             });
-            parsed.forEach((key, value) -> {
-                ModMenuBadgesLibClient.LOGGER.info("- {}", key);
-                value.badges().forEach(badge -> {
-                    var name = badge.name();
-                    if (badge.delete()) name = "\u001B[9m" + badge.name() + "\u001B[0m";
-                    ModMenuBadgesLibClient.LOGGER.info("\t- {}", name);
+
+            if (parsed != null) {
+                EXTERNAL.putAll(parsed);
+
+                parsed.forEach((key, value) -> {
+                    ModMenuBadgesLibClient.LOGGER.info("- {}", key);
+                    value.badges().forEach(badge -> {
+                        var name = badge.name();
+                        if (badge.delete()) name = "\u001B[9m" + badge.name() + "\u001B[0m";
+                        ModMenuBadgesLibClient.LOGGER.info("\t- {}", name);
+                    });
                 });
-            });
-            EXTERNAL.putAll(parsed);
-        } catch (IOException e) {
+            }
+        } catch (Exception e) {
             ModMenuBadgesLibClient.LOGGER.error("Failed to load modmenu-extra-badges.json");
             ModMenuBadgesLibClient.LOGGER.error(e.getLocalizedMessage());
         }

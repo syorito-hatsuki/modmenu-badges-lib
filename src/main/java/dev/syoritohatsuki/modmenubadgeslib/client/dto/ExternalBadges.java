@@ -1,15 +1,23 @@
 package dev.syoritohatsuki.modmenubadgeslib.client.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public record ExternalBadges(boolean overwrite, boolean sort, List<ExtraBadge> badges) {
-    @JsonCreator
-    public ExternalBadges(@JsonProperty("overwrite") Boolean overwrite, @JsonProperty("sort") Boolean sort, @JsonProperty("badges") List<ExtraBadge> badges) {
-        this(overwrite != null && overwrite, sort != null && sort, badges != null ? badges : List.of());
-    }
+public record ExternalBadges(
+        boolean overwrite,
+        boolean sort,
+        List<ExtraBadge> badges
+) {
+    public static final Codec<ExternalBadges> CODEC =
+            RecordCodecBuilder.create(instance -> instance.group(
+                    Codec.BOOL.optionalFieldOf("overwrite", false)
+                            .forGetter(ExternalBadges::overwrite),
+                    Codec.BOOL.optionalFieldOf("sort", false)
+                            .forGetter(ExternalBadges::sort),
+                    ExtraBadge.CODEC.listOf()
+                            .optionalFieldOf("badges", List.of())
+                            .forGetter(ExternalBadges::badges)
+            ).apply(instance, ExternalBadges::new));
 }
