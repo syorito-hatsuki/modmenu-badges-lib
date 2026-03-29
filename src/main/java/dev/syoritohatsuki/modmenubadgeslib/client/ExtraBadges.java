@@ -8,7 +8,7 @@ import dev.syoritohatsuki.modmenubadgeslib.client.dto.ExternalBadges;
 import dev.syoritohatsuki.modmenubadgeslib.client.dto.ExtraBadge;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.CustomValue;
-import net.minecraft.util.JsonHelper;
+import net.minecraft.util.GsonHelper;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -73,7 +73,7 @@ public final class ExtraBadges {
         if (!Files.exists(extrasFile)) return;
 
         try {
-            var json = JsonHelper.deserialize(Files.readString(extrasFile));
+            var json = GsonHelper.parse(Files.readString(extrasFile));
 
             DataResult<Map<String, ExternalBadges>> result =
                     ROOT_CODEC.parse(JsonOps.INSTANCE, json);

@@ -1,59 +1,48 @@
 import com.modrinth.minotaur.TaskModrinthUpload
 
+val archivesBaseName: String by project
+val mavenGroup: String by project
+val modVersion: String by project
+
+val javaVersion = JavaVersion.VERSION_25
+
 plugins {
-    id("fabric-loom")
-    id("com.modrinth.minotaur")
+    alias(libs.plugins.fabric.loom)
+    alias(libs.plugins.minotaur)
 }
 
 base {
-    val archivesBaseName: String by project
     archivesName.set(archivesBaseName)
 }
 
-val javaVersion = JavaVersion.VERSION_21
-
-val modVersion: String by project
-version = modVersion
-
-val mavenGroup: String by project
 group = mavenGroup
+version = modVersion
 
 repositories {
     maven("https://api.modrinth.com/maven")
 }
 
 dependencies {
-    val minecraftVersion: String by project
-    minecraft("com.mojang", "minecraft", minecraftVersion)
-
-    val yarnMappings: String by project
-    mappings("net.fabricmc", "yarn", yarnMappings, null, "v2")
-
-    val loaderVersion: String by project
-    modImplementation("net.fabricmc", "fabric-loader", loaderVersion)
-
-    val fabricVersion: String by project
-    modImplementation("net.fabricmc.fabric-api", "fabric-api", fabricVersion)
-
-    val modmenuVersion: String by project
-    modImplementation("maven.modrinth", "modmenu", modmenuVersion)
+    minecraft(libs.minecraft)
+    implementation(libs.fabric.loader)
+    implementation(libs.fabric.api)
+    implementation(libs.modmenu)
 }
 
 modrinth {
     token.set(System.getenv("MODRINTH_TOKEN"))
-    projectId.set("modmenu-badges-lib")
+    projectId.set(archivesBaseName)
     versionName.set("ModMenu Badges Lib $modVersion")
     versionNumber.set(modVersion)
     versionType.set("release")
-    uploadFile.set(tasks.remapJar)
-    additionalFiles.add(tasks.remapSourcesJar)
+    uploadFile.set(tasks.jar)
+    project.afterEvaluate {
+        tasks.findByName("sourcesJar")?.let {
+            additionalFiles.add(it)
+        }
+    }
     gameVersions.addAll(
-        "1.21.6",
-        "1.21.7",
-        "1.21.8",
-        "1.21.9",
-        "1.21.10",
-        "1.21.11",
+        "26.1"
     )
     loaders.add("fabric")
     changelog.set(rootProject.file("CHANGELOG.md").readText())
@@ -65,26 +54,24 @@ modrinth {
     }
 }
 
-tasks {
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(javaVersion.toString()))
+    }
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    withSourcesJar()
+}
 
+tasks {
     named("modrinth").configure {
         @Suppress("UnstableApiUsage") doLast {
             (this@configure as TaskModrinthUpload).uploadInfo?.let {
-                "https://modrinth.com/mod/modmenu-badges-lib/version/${it.id}".apply {
-                    println(this)
-                    rootProject.file("build/modrinth_url.txt").writeText(this)
-                }
+                rootProject.file("build/modrinth_url.txt").writeText(
+                    "https://modrinth.com/mod/modmenu-badges-lib/version/${it.id}".apply(::println)
+                )
             } ?: return@doLast
         }
-    }
-
-    java {
-        toolchain {
-            languageVersion.set(JavaLanguageVersion.of(javaVersion.toString()))
-        }
-        sourceCompatibility = javaVersion
-        targetCompatibility = javaVersion
-        withSourcesJar()
     }
 
     processResources {
@@ -92,6 +79,7 @@ tasks {
             expand(mutableMapOf("version" to project.version))
         }
     }
+
     withType<JavaCompile> {
         options.encoding = "UTF-8"
         sourceCompatibility = javaVersion.toString()
